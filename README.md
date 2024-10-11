@@ -3,7 +3,7 @@
     <h3>SentinelaNet é uma CNC (Comando e Controle) em Python, projetada para gerenciar um malware que realiza ataques de disparos em massa (DDoS).</h3>
 
   <p align="center">
-      <img src="https://github.com/user-attachments/assets/88c20cfc-bc17-44e5-a650-827ca1f350ab">
+      <img src="https://github.com/user-attachments/assets/c7b54c33-26da-43b2-b12e-67a266719f0a">
   </p>
   <p>Esta CNC é para ser uma versão aprimorada do KryptonC2 e será disponibilizada publicamente e de forma gratuita. Vou hospedá-la e permitir que os usuários a utilizem sem a necessidade de compra.</p>
 </div>
