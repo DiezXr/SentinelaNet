@@ -18,7 +18,7 @@
 
 ```
 Não sei se você entendeu a imagem acima, mas é assim que funciona:
-Você pode salvar, como fiz na imagem acima, para não precisar inserir o IP e a porta toda vez.
+Você pode salvar em saved sessions, como fiz na imagem acima, para não precisar inserir o IP e a porta toda vez.
 ```
 
 <br>
@@ -26,7 +26,7 @@ Você pode salvar, como fiz na imagem acima, para não precisar inserir o IP e a
 ## Como criar uma conta
 
 - Para criar uma conta, siga o processo acima, mas utilize a porta ```102```.
-- Quando se conectar coloque um usuario e uma senha
+- Quando se conectar crie um usuario e uma senha
 - E pronto!
 
 ![image](https://github.com/user-attachments/assets/b947d85f-c545-4ced-a1e7-ca9039def74f)
