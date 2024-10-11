@@ -6,6 +6,8 @@
       <img src="https://github.com/user-attachments/assets/c7b54c33-26da-43b2-b12e-67a266719f0a">
   </p>
   <p>Esta CNC é para ser uma versão aprimorada do KryptonC2 e será disponibilizada publicamente e de forma gratuita. Vou hospedá-la e permitir que os usuários a utilizem sem a necessidade de compra.</p>
+  
+[Quero usar ou testar o SentinelaNet](https://github.com/CirqueiraDev/SentinelaNet/blob/main/payload/BOTNET.md)
 </div>
 
 <br>
