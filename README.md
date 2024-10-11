@@ -51,16 +51,16 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
   ### Attack Commands
   Command  | Usage | Description
   ---------|-------|-------------
-  .UDP     | \<taregt> \<port> \<time> | Starts UDP Flood
-  .TCP     | \<taregt> \<port> \<time> | Starts TCP Flood
-  .SYN     | \<taregt> \<port> \<time> | Starts TCP SYN Flood
-  .VSE     | \<taregt> \<port> \<time> | Send Valve Source Engine Protocol
-  .MCPE    | \<taregt> \<port> \<time> | Minecraft PE Status Ping Protocol
-  .FIVEM   |\<taregt> \<port> \<time> | Send FiveM Status Ping Protocol
-  .ROBLOX  | \<taregt> \<port> \<time> | Starts ROBLOX UDP Flood
-  .HTTPGET |\<taregt> \<port> \<time> | Starts HTTP/1.1 GET Flood
-  .HTTPPOST|\<taregt> \<port> \<time> | Starts HTTP/1.1 POST Flood
-  .BROWSER |\<taregt> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
+  .UDP     | \<target> \<port> \<time> | Starts UDP Flood
+  .TCP     | \<target> \<port> \<time> | Starts TCP Flood
+  .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
+  .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
+  .MCPE    | \<target> \<port> \<time> | Minecraft PE Status Ping Protocol
+  .FIVEM   |\<target> \<port> \<time> | Send FiveM Status Ping Protocol
+  .ROBLOX  | \<target> \<port> \<time> | Starts ROBLOX UDP Flood
+  .HTTPGET |\<target> \<port> \<time> | Starts HTTP/1.1 GET Flood
+  .HTTPPOST|\<target> \<port> \<time> | Starts HTTP/1.1 POST Flood
+  .BROWSER |\<target> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
 </div>
 
 ---
