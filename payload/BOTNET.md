@@ -12,7 +12,8 @@
 ## Passo a passo para se conectar e usar a botnet
 - instale o PuTTY
 - Coloque o IP e a Porta ```216.172.177.16``` : ```101```.
-- Configure o PuTTY com um conexão RAW
+- Configure o PuTTY com uma conexão RAW
+- e tente se conectar
   
 ![image](https://github.com/user-attachments/assets/0ab0fd63-1f51-4953-8f9b-3e439d54ebef)
 
