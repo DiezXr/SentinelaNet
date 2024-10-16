@@ -25,7 +25,7 @@ pip install colorama
 ```shell script
 python3 cnc.py <port>
 ```
-**Os logins são salvos em logins.txt no formato "username:password"**
+**Os logins são salvos em logins.txt no formato "username:password" dentro do arquivo logins.txt** 
 
 <br>
 
