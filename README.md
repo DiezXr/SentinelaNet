@@ -9,8 +9,6 @@
   
 [Quero usar ou testar o SentinelaNet](https://github.com/CirqueiraDev/SentinelaNet/blob/main/payload/BOTNET.md)
 
-<br>
-
 </div>
 
 <br>
