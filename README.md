@@ -11,8 +11,6 @@
 
 <br>
 
-[I want to use or test SentinelaNet](https://github.com/CirqueiraDev/SentinelaNet/blob/main/payload/BOTNET.md)
-
 </div>
 
 <br>
