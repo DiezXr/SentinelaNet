@@ -43,4 +43,3 @@ Você pode salvar em saved sessions, como fiz na imagem acima, para não precisa
 ## Owner
 - **Discord: Cirqueira**
     - [YouTube](https://www.youtube.com/@cirqueiradev)
-    - [Telegram](https://t.me/CirqueiraDev)
