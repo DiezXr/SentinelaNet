@@ -1,5 +1,5 @@
 <div align="center">
-    <h4>❗ A VPS está offline, então não irá funcionar. ❗</h4>
+    <h4>❗ A VPS caiu, então não irá funcionar. ❗</h4>
     <h1>SentinelaNet</h1>
     <h3>Aqui, você não apenas pode usar essa botnet, como também pode contribuir para o seu poder.</h3>
 
