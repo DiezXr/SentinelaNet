@@ -71,4 +71,3 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
 ### Owner
 - **Discord: Cirqueira**
     - [YouTube](https://www.youtube.com/@cirqueiradev)
-    - [Telegram](https://t.me/CirqueiraDev)
