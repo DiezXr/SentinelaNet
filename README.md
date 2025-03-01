@@ -40,9 +40,11 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
 
 <br>
 
+---
+
 <div align="center">
-  
-  ## CNC Commands
+    
+  ### CNC Commands
   Command | Description
   --------|------------
   help, ? | Shows list of commands
