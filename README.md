@@ -77,6 +77,14 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
 
 ---
 
+### Last News
+- Updated CNC
+    - Added blacklist ```01/03/2025```
+
+- Updated Payload
+    - Updated Browser Flood ```01/03/2025```
+---
+
 ### Owner
 - **Discord: Cirqueira**
     - [YouTube](https://www.youtube.com/@cirqueiradev)
