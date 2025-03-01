@@ -43,6 +43,13 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
 ---
 
 <div align="center">
+
+  ### Admin/root Commands
+  Command | Description
+  --------|------------
+  !admin, !adm | Shows list of admin commands
+  !USER  | Add/List/Remove users
+  !blacklist | Add/List/Remove blacklisted targets
     
   ### CNC Commands
   Command | Description
