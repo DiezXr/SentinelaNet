@@ -64,6 +64,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
   Command  | Usage | Description
   ---------|-------|-------------
   .UDP     | \<target> \<port> \<time> | Starts UDP Flood
+  .UDP     | \<target> \<port> \<time> | Starts UDP Flood (Bypass)
   .TCP     | \<target> \<port> \<time> | Starts TCP Flood
   .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
@@ -83,6 +84,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
 
 - Updated Payload
     - Updated Browser Flood ```01/03/2025```
+    - Added UDPB Flood with a simple bypass method ```06/03/2025```
 ---
 
 ### Owner ðŸŽ®
