@@ -85,7 +85,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
 - Updated Payload
     - Updated Browser Flood ```01/03/2025```
     - Added UDPB Flood with a simple bypass method ```06/03/2025```
-    - Roblox HEX Flood removed ```06/03/2025``` 
+    - Roblox UDP Flood removed ```06/03/2025``` 
 ---
 
 ### Owner ðŸŽ®
