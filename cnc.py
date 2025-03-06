@@ -49,12 +49,13 @@ banner = f'''
 admin_commands = f"""
 {gray}Admin Commands:
 {lightwhite}!USER               {gray}Add/List/Remove users
-{lightwhite}!BLACKLIST          {gray}Add/List/Remove BlackList targets
+{lightwhite}!BLACKLIST          {gray}Black List targets
 """
 
 def botnetMethodsName(method):
     method_name = {
         ".UDP": '     UDP Flood',
+        ".UDPB": '    UDP Flood Bypass',
         ".TCP": '     TCP Flood',
         ".SYN": '     TCP SYN Flood',
         ".HEX": '     HEX Flood',
