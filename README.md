@@ -67,12 +67,13 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
   .UDPB    | \<target> \<port> \<time> | Starts UDP Flood (Bypass)
   .TCP     | \<target> \<port> \<time> | Starts TCP Flood
   .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
+  .HEX     | \<target> \<port> \<time> | Starts HEXdecimal Flood
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
   .MCPE    | \<target> \<port> \<time> | Minecraft PE Status Ping Protocol
-  .FIVEM   |\<target> \<port> \<time> | Send FiveM Status Ping Protocol
-  .HTTPGET |\<target> \<port> \<time> | Starts HTTP/1.1 GET Flood
-  .HTTPPOST|\<target> \<port> \<time> | Starts HTTP/1.1 POST Flood
-  .BROWSER |\<target> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
+  .FIVEM   | \<target> \<port> \<time> | Send FiveM Status Ping Protocol
+  .HTTPGET | \<target> \<port> \<time> | Starts HTTP/1.1 GET Flood
+  .HTTPPOST| \<target> \<port> \<time> | Starts HTTP/1.1 POST Flood
+  .BROWSER | \<target> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
 </div>
 
 ---
