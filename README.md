@@ -70,7 +70,6 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
   .MCPE    | \<target> \<port> \<time> | Minecraft PE Status Ping Protocol
   .FIVEM   |\<target> \<port> \<time> | Send FiveM Status Ping Protocol
-  .ROBLOX  | \<target> \<port> \<time> | Starts ROBLOX UDP Flood
   .HTTPGET |\<target> \<port> \<time> | Starts HTTP/1.1 GET Flood
   .HTTPPOST|\<target> \<port> \<time> | Starts HTTP/1.1 POST Flood
   .BROWSER |\<target> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
@@ -85,6 +84,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
 - Updated Payload
     - Updated Browser Flood ```01/03/2025```
     - Added UDPB Flood with a simple bypass method ```06/03/2025```
+    - Roblox HEX Flood removed ```06/03/2025``` 
 ---
 
 ### Owner ðŸŽ®
