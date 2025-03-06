@@ -81,6 +81,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
 ### Last News ‚ú®
 - Updated CNC
     - Added blacklist ```01/03/2025```
+    - Roblox UDP Flood removed ```06/03/2025``` 
 
 - Updated Payload
     - Updated Browser Flood ```01/03/2025```
