@@ -62,7 +62,6 @@ def botnetMethodsName(method):
         ".VSE": '     Send Valve Source Engine Protocol',
         ".MCPE": '    Minecraft PE Status Ping Protocol',
         ".FIVEM": '   Send FiveM Status Ping Protocol',
-        ".ROBLOX": '  Roblox UDP Flood',
         ".HTTPGET": ' HTTP/1.1 GET Flood',
         ".HTTPPOST": 'HTTP/1.1 POST Flood',
         ".BROWSER": ' HTTP/1.1 BROWSER Simulator Flood'
