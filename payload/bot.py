@@ -207,8 +207,6 @@ def main():
 
                 for _ in range(threads):
                     threading.Thread(target=lunch_attack, args=(method, ip, port, secs), daemon=True).start()
-
-                print(f'{method}, {ip}, {port}, {secs}')
         except:
             break
 
