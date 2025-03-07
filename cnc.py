@@ -54,9 +54,9 @@ admin_commands = f"""
 
 def botnetMethodsName(method):
     method_name = {
-        ".UDP": '     UDP Flood',
-        ".UDPB": '    UDP Flood Bypass',
-        ".TCP": '     TCP Flood',
+        ".UDP": '     UDP Flood Bypass',
+        ".TCP": '     TCP Flood Bypass',
+        ".MIX": '     TCP and UDP Flood Bypass',
         ".SYN": '     TCP SYN Flood',
         ".HEX": '     HEX Flood',
         ".VSE": '     Send Valve Source Engine Protocol',
