@@ -88,6 +88,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo nÃ
     - Added UDP Flood Bypass ```06/03/2025```
     - Roblox UDP Flood removed ```06/03/2025```
     - Added TCP and UDP Flood Bypass ```07/03/2025```
+    - Updated SYN Flood ```07/03/2025```
 ---
 
 ### Owner ðŸŽ®
