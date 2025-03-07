@@ -63,9 +63,8 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
   ### Attack Commands
   Command  | Usage | Description
   ---------|-------|-------------
-  .UDP     | \<target> \<port> \<time> | Starts UDP Flood
-  .UDPB    | \<target> \<port> \<time> | Starts UDP Flood Bypass
-  .TCP     | \<target> \<port> \<time> | Starts TCP Flood
+  .UDP     | \<target> \<port> \<time> | Starts UDP Flood Bypass
+  .TCP     | \<target> \<port> \<time> | Starts TCP Flood Bypass
   .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
   .HEX     | \<target> \<port> \<time> | Starts HEXdecimal Flood
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
