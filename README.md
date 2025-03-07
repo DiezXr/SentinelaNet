@@ -65,6 +65,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
   ---------|-------|-------------
   .UDP     | \<target> \<port> \<time> | Starts UDP Flood Bypass
   .TCP     | \<target> \<port> \<time> | Starts TCP Flood Bypass
+  .MIX     | \<target> \<port> \<time> | Starts TCP and UDP Flood Bypass
   .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
   .HEX     | \<target> \<port> \<time> | Starts HEXdecimal Flood
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
