@@ -76,6 +76,62 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n�
   .BROWSER | \<target> \<port> \<time> | Starts HTTP/1.1 BROWSER Simulator Flood
 </div>
 
+<br>
+
+### 📌 Sobre os ataques Ataques Implementados
+## 🔹 Ataques Baseados em Rede (Camada 3 e 4 - UDP/TCP)
+
+### 🟢 UDP Flood (`attack_udp_bypass`)
+- Envia pacotes UDP de tamanhos variados para sobrecarregar o alvo.
+- Pode ser mitigado por firewalls e rate-limiting de ISPs.
+
+### 🟢 TCP Flood (`attack_tcp_bypass`)
+- Envia pacotes TCP continuamente para esgotar conexões do alvo.
+- Se não houver handshake adequado, pode ser bloqueado facilmente.
+
+### 🟢 SYN Flood (`attack_syn`)
+- Envia requisições SYN para exaurir conexões TCP pendentes.
+- Eficaz contra servidores mal protegidos.
+- Firewalls modernos usam **SYN Cookies** para mitigar.
+
+### 🟢 Ataque Híbrido (`attack_tcp_udp_bypass`)
+- Alterna entre TCP e UDP para confundir defesas.
+- Pode evitar filtros estáticos, mas ainda é detectável por análise comportamental.
+
+## 🔹 Ataques em Aplicações (Camada 7 - HTTP)
+
+### 🔵 HTTP GET Flood (`attack_http_get`)
+- Simula acessos massivos a um site para sobrecarregar o servidor.
+- Pode ser mitigado por **CAPTCHA, Cloudflare e Rate-Limiting**.
+
+### 🔵 HTTP POST Flood (`attack_http_post`)
+- Simula envio de dados para consumir processamento do servidor.
+- Mais difícil de mitigar que GET, mas pode ser bloqueado com autenticação ou regras de firewall.
+
+### 🔵 Browser Emulation (`attack_browser`)
+- Simula tráfego de um navegador real para burlar proteções básicas.
+- Pode enganar bloqueios simples, mas não funciona contra defesas avançadas.
+
+## 🔹 Ataques Específicos para Jogos
+
+### 🎮 FiveM Attack (`attack_fivem`)
+- Explora vulnerabilidades no protocolo de comunicação do FiveM.
+- FiveM tem melhorado suas proteções, mas servidores mal configurados ainda podem ser afetados.
+
+### 🎮 Minecraft PE Attack (`attack_mcpe`)
+- Envia pacotes corrompidos para explorar falhas na rede do jogo.
+- Pode afetar servidores sem proteção adequada, mas padrões desse ataque já são bloqueados em alguns serviços.
+
+### 🎮 VSE Query Flood (`attack_vse`)
+- Explora o protocolo de consulta de servidores de jogos para gerar carga excessiva.
+- Muito utilizado contra servidores **Source Engine** (CS:GO, TF2, etc.).
+
+<br>
+
+⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
+
+<br>
+
 ---
 
 ### Last News ✨
