@@ -98,6 +98,8 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n�
 - Alterna entre TCP e UDP para confundir defesas.
 - Pode evitar filtros estáticos, mas ainda é detectável por análise comportamental.
 
+<br>
+
 ## 🔹 Ataques em Aplicações (Camada 7 - HTTP)
 
 ### 🔵 HTTP GET Flood (`attack_http_get`)
@@ -111,6 +113,8 @@ Depois execute o malware em outro dispositivo que suporte python (caso o alvo n�
 ### 🔵 Browser Emulation (`attack_browser`)
 - Simula tráfego de um navegador real para burlar proteções básicas.
 - Pode enganar bloqueios simples, mas não funciona contra defesas avançadas.
+
+<br>
 
 ## 🔹 Ataques Específicos para Jogos
 
